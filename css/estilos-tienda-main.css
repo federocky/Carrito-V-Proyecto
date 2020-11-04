@@ -1,0 +1,104 @@
+main {
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: #E3E3E3;
+}
+
+main #controlador {
+    
+}
+
+main #controlador h2 {
+    padding-bottom: 20px;
+    text-align: center;
+    font-family: 'Courgette', cursive;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+main #controlador input {
+    width: 100%;
+    margin-bottom: 15px;
+    height: 32px;
+    padding: 0px 10px;
+    background-image: url(../icon/search-solid.svg);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 13px;
+    border-radius: 9px;
+    border: 1px solid gray;
+}
+
+
+main #controlador select {
+    height: 32px;
+    border-radius: 9px;
+}
+
+main #articulos {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+main #articulos article {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 35px;
+
+    box-shadow: 8px 8px 5px #bdbdbd;
+    width: 235px;
+    background-color: #fff;
+}
+
+main #articulos article img {
+    width: 235px;
+    height: 150px; /*ESTOY HAY QUE MIRARLO BIEN*/
+}
+
+
+#articulos article h4{
+    font-family: 'Poppins', sans-serif;
+}
+
+#articulos article p i {
+    color: #FFEE00;
+}
+
+#articulos article #precio {
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+}
+
+#articulos article .agregar-carro{
+    position: relative;
+}
+
+#articulos article > div {
+    background-color: #EB9524;
+    color: #fff;
+    border-radius: 12px 0px 0px 0px;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+#articulos article > div i {
+    padding: 8px;
+}
+
+#articulos article .dedito {
+    position: absolute;
+    right: 0px;
+    background-color: #13df13;
+    border-radius: 12px;
+    transform: scale(0.0);
+    transition: all 1s;
+}
+

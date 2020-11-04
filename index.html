@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mimascota</title>
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/estilos-header-menu.css">
+    <link rel="stylesheet" href="css/estilos-tienda-main.css">
+</head>
+
+<body>
+    <header>
+        <div class="contenedor">
+            <a href="#">
+				<img src="icon/logo-pagina.png">
+				<h1>Mimascota <span>.com</span></h1>
+            </a>
+            
+
+                <input type="checkbox" id="icono-carro" name="icono-carro">
+                <label for="icono-carro"><i class="fas fa-shopping-cart"></i></label>
+
+                <input type="checkbox" id="icono-menu" name="icono-menu">
+                <label for="icono-menu" ><i class="fas fa-bars"></i></label>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#">Iniciar sesión</a></li>
+                        <li><a href="#">Registrarse</a></li>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Guardería</a></li>
+                        <li><a href="#">Paseos</a></li>
+                        <li><a href="#">Peluquería</a></li>
+                        <li><a href="#">Compras</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </nav>
+
+                <div id="contenedor-carrito">
+                    <section>
+                        <div id="contenedor-articulos">
+<!--                        <div class="articulo">
+                                <img src="img/gato-juguete.jpg" alt="imagen-gato">
+                                <div>
+                                    <p class="titulo-articulo">Juguete gato <span><i class="far fa-trash-alt"></i></span></p>
+                                    <input type="number" name="cantidad" class="cantidad-articulos" value="1">
+                                    <p class="precio-articulo">5.00€</p>
+                                </div>
+                            </div>
+
+                            <div class="articulo">
+                                <img src="img/gato-juguete.jpg" alt="imagen-gato">
+                                <div>
+                                    <p class="titulo-articulo">Juguete gato <span><i class="far fa-trash-alt"></i></span></p>
+                                    <input type="number" name="cantidad" class="cantidad-articulos" value="1">
+                                    <p class="precio-articulo">5.00€</p>
+                                </div>
+                            </div> -->
+                        </div>
+                        
+                        <div id="total">
+                            <p>TOTAL: <span>0.00</span></p>
+                        </div>
+
+                        <div id="boton-realizar-compra">
+                            <p><span><i class="fas fa-cart-arrow-down"></i></span>Realizar compra</p>
+                        </div>
+                    </section>
+                </div>
+
+
+            </div>
+
+    </header>
+
+    <main>
+        <section id="controlador">
+            <h2>Nuestros Productos</h2>
+
+            <input type="search" name="buscador" placeholder="Buscar juguetes, camas, accesorios...">
+
+            <select name="ordenar" id="ordenar">
+                <option value="relevancia">Relevancia</option>
+                <option value="precio-asc">Precio ascendente</option>
+                <option value="precio-des">Precio descendente</option>
+                <option value="valoracion">Valoración</option>
+            </select>
+
+            <select name="cantidad-items" id="">
+                <option value="6">6</option>
+                <option value="12">12</option>
+                <option value="24">24</option>
+            </select>
+        </section>
+
+        <section id="slider">
+
+        </section>
+
+        <section id="articulos">
+
+            <article id="1">
+                <img src="img/gato-juguete.jpg" alt="gato-jugando">
+                <h4>Juguete sonido</h4>
+                <p>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </p>
+
+                <p id="precio">2.78€</p>
+
+                <div class="agregar-carro">
+                    <i class="fas fa-cart-arrow-down"></i>
+                    <i class="far fa-thumbs-up dedito"></i>
+                </div>
+            </article>
+
+
+            <article id="2">
+                <img src="img/perro-cama.jpg" alt="cama-perro">
+                <h4>Cama perro</h4>
+                <p>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </p>
+
+                <p id="precio">12.50€</p>
+
+                <div class="agregar-carro">
+                    <i class="fas fa-cart-arrow-down"></i>
+                    <i class="far fa-thumbs-up dedito"></i>
+                </div>
+            </article>
+
+        </section>
+    </main>
+    <script src="js/app.js" type="text/javascript"></script>
+</body>
+</html>
