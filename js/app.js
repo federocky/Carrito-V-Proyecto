@@ -4,7 +4,7 @@ const productos = [
         precio: 2.78,
         nombre: 'juguete sonido',
         descripcion: 'este juguete es una puta pasada',
-        rutaImg: '../img/gato-juguete.jpg',
+        rutaImg: 'img/gato-juguete.jpg',
         stock: 20
     },
     {
@@ -12,7 +12,7 @@ const productos = [
         precio: 12.50,
         nombre: 'cama para perro',
         descripcion: 'una camita muy comoda',
-        rutaImg: '../img/perro-cama.jpg',
+        rutaImg: 'img/perro-cama.jpg',
         stock: 2
     }
 ];
@@ -31,7 +31,7 @@ class Carro {
      */
     static agregaProducto(prod) {
 
-        let encontrado = false;
+        let encontrado = false; //flag para comprobar si ya tenemos el producto en el carro
 
         //si ya tenemos este producto actualizamos su cantidad
         carro.forEach(i => {
@@ -135,11 +135,23 @@ class UI {
     static activarControladoresCantidad(){
         document.querySelectorAll('.cantidad-articulos').forEach(element => {
             element.addEventListener('click', e => {
-                UI.actualizarPrecio(e);
-                Carro.actualizarCantidad(e);
-                UI.actualizarTotal();
+                cambio(e);                
             })
         });
+
+        document.querySelectorAll('.cantidad-articulos').forEach(element => {
+            element.addEventListener('keyup', e => {
+                cambio(e);                
+            });
+        });
+        //TODO: por que no me funciona esto? element.addEventListener('keyup', cambio(e));
+        // seria un codigo mas limpio pero me dice que e no esta definida.
+
+        function cambio(e) {
+            UI.actualizarPrecio(e);
+            Carro.actualizarCantidad(e);
+            UI.actualizarTotal();
+        }
     }
 
     static actualizarPrecio(e){
@@ -158,6 +170,7 @@ class UI {
 } 
 
 
+
 //pinchamos en agregar al carro
 document.querySelectorAll('.agregar-carro').forEach(iterador => {
 
@@ -167,7 +180,7 @@ document.querySelectorAll('.agregar-carro').forEach(iterador => {
         productos.forEach(producto => {
             if(producto.codigo == codigoSeleccionado) {
                 Carro.agregaProducto(producto);
-                producto.stock--;
+                producto.stock--; //esto deberia estar en la funcion
             }
         })
     })
