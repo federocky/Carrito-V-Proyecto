@@ -2,18 +2,38 @@ const productos = [
     {
         codigo: 1,
         precio: 2.78,
-        nombre: 'juguete sonido',
+        nombre: 'Juguete sonido',
         descripcion: 'este juguete es una puta pasada',
-        rutaImg: 'img/gato-juguete.jpg',
-        stock: 20
+        rutaImg: 'img/productos/gato-gusanito-azul.jpg',
+        stock: 20, 
+        estrellas: 4
     },
     {
         codigo: 2,
         precio: 12.50,
-        nombre: 'cama para perro',
+        nombre: 'Cama para perro',
         descripcion: 'una camita muy comoda',
-        rutaImg: 'img/perro-cama.jpg',
-        stock: 2
+        rutaImg: 'img/productos/cama-perro.jpg',
+        stock: 2, 
+        estrellas: 5
+    },
+    {
+        codigo: 3,
+        precio: 23.50,
+        nombre: 'Carrito para peluches',
+        descripcion: 'un carrito muy muy chulo',
+        rutaImg: 'img/productos/carrito-peluche.jpg',
+        stock: 50, 
+        estrellas: 5
+    },
+    {
+        codigo: 4,
+        precio: 5.99,
+        nombre: 'Correa para perros',
+        descripcion: 'correa para perro',
+        rutaImg: 'img/productos/correa-perro.jpg',
+        stock: 50, 
+        estrellas: 3
     }
 ];
 
@@ -167,14 +187,73 @@ class UI {
         }, 500);
     }
 
+    static cargarProductos (objeto) {
+        objeto.forEach(producto => {
+            //console.log(producto);
+
+            let article = document.createElement('article');
+            article.id = producto.codigo;
+
+            let img = document.createElement('img');
+            img.src = producto.rutaImg;
+
+            let tituloProducto = document.createElement('h4');
+            tituloProducto.innerText = producto.nombre;
+
+            let estrellas = document.createElement('p');
+            for (let i = 0; i < 5; i++) {
+                let estrella = document.createElement('i');
+
+                if(i <= producto.estrellas) {
+                    estrella.classList.add('fas', 'fa-star');
+                    estrellas.appendChild(estrella);
+                } else {
+                    estrella.classList.add('far', 'fa-star');
+                    estrellas.appendChild(estrella);
+                }
+            }
+
+            let precio = document.createElement('p');
+            precio.id = 'precio';
+            precio.innerText = producto.precio;
+
+
+            let botonAgregar = document.createElement('div');
+            botonAgregar.classList.add('agregar-carro');
+            let carrito = document.createElement('i');
+            let dedito = document.createElement('i');
+            carrito.classList.add('fas', 'fa-cart-arrow-down');
+            dedito.classList.add('far', 'fa-thumbs-up', 'dedito');
+            botonAgregar.appendChild(carrito);
+            botonAgregar.appendChild(dedito);
+
+            article.appendChild(img);
+            article.appendChild(tituloProducto);
+            article.appendChild(estrellas);
+            article.appendChild(precio);
+            article.appendChild(botonAgregar);
+
+            document.querySelector('#articulos').appendChild(article);
+
+
+        });
+    }
+
 } 
 
+
+
+
+
+//Creo los productos dinamicante a partir de mi Almacen(array de objetos)
+UI.cargarProductos(productos);
 
 
 //pinchamos en agregar al carro
 document.querySelectorAll('.agregar-carro').forEach(iterador => {
 
     iterador.addEventListener('click', e => {
+        console.log(e.target.parentElement.parentElement.id);
         let codigoSeleccionado = e.target.parentElement.parentElement.id;
         UI.muestraDedito(e);
         productos.forEach(producto => {
@@ -189,4 +268,3 @@ document.querySelectorAll('.agregar-carro').forEach(iterador => {
 
 //pinchamos en el carrito para verlo
 document.querySelector('#icono-carro').addEventListener('click', UI.muestraProducto);
-
