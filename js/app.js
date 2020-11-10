@@ -1,46 +1,7 @@
-const productos = [
-    {
-        codigo: 1,
-        precio: 2.78,
-        nombre: 'Juguete sonido',
-        descripcion: 'este juguete es una puta pasada',
-        rutaImg: 'img/productos/gato-gusanito-azul.jpg',
-        stock: 20, 
-        estrellas: 4
-    },
-    {
-        codigo: 2,
-        precio: 12.50,
-        nombre: 'Cama para perro',
-        descripcion: 'una camita muy comoda',
-        rutaImg: 'img/productos/cama-perro.jpg',
-        stock: 2, 
-        estrellas: 5
-    },
-    {
-        codigo: 3,
-        precio: 23.50,
-        nombre: 'Carrito para peluches',
-        descripcion: 'un carrito muy muy chulo',
-        rutaImg: 'img/productos/carrito-peluche.jpg',
-        stock: 50, 
-        estrellas: 5
-    },
-    {
-        codigo: 4,
-        precio: 5.99,
-        nombre: 'Correa para perros',
-        descripcion: 'correa para perro',
-        rutaImg: 'img/productos/correa-perro.jpg',
-        stock: 50, 
-        estrellas: 3
-    }
-];
 
+import {productos} from "./almacen.js"; //recuerda que esto solo funciona desde servidor
 
 let carro = [];
-
-
 
 
 class Carro {
@@ -77,11 +38,20 @@ class Carro {
 
     }
 
-    //Al utilizar los controladores de cantidad del carro actualizamos esto en el carro
+    /**
+     * Elimina un producto del carro
+     */
+    static borrarProducto (codigo) {
+        carro.forEach(elemento => {
+            if(elemento.codigo == codigo) carro.splice(carro.indexOf(elemento),1);
+            UI.muestraProducto();
+        })
+    }
+
+    //Se actualiza la cantidad de articulos en el carro.
     static actualizarCantidad(e){
         carro.forEach(producto => {
             if(producto.codigo == e.target.parentElement.parentElement.id) producto.cantidad = e.target.value;
-            console.log(producto);
         });
     }
 
@@ -110,7 +80,7 @@ class UI {
             let contenedorSecundario = document.createElement('div');
             let tituloProducto = document.createElement('p');
             tituloProducto.classList.add('titulo-articulo');
-            let iconoDelete = document.createElement('i');
+            let iconoDelete = document.createElement('i'); 
             iconoDelete.classList.add('fa', 'fa-trash-alt');
             let input = document.createElement('input');
             input.setAttribute('type', 'number');
@@ -123,7 +93,7 @@ class UI {
             tituloProducto.textContent = producto.nombre;
             input.setAttribute('value', producto.cantidad);
             precio.textContent = (producto.precio * producto.cantidad).toFixed(2);
-            precioOriginal.textContent = producto.precio;
+            precioOriginal.textContent = producto.precio.toFixed(2);
 
             tituloProducto.appendChild(iconoDelete);
             contenedorSecundario.appendChild(tituloProducto);
@@ -138,6 +108,7 @@ class UI {
 
         UI.actualizarTotal();
         UI.activarControladoresCantidad();
+        UI.activarPapelera();
     }
 
 
@@ -155,15 +126,22 @@ class UI {
     static activarControladoresCantidad(){
         document.querySelectorAll('.cantidad-articulos').forEach(element => {
             element.addEventListener('click', e => {
-                cambio(e);                
+                if(e.target.value > 0) cambio(e);
+                else {
+                    e.target.value = 1;       
+                    cambio(e);
+                }                
             })
-        });
 
-        document.querySelectorAll('.cantidad-articulos').forEach(element => {
-            element.addEventListener('keyup', e => {
-                cambio(e);                
+            element.addEventListener('blur', e => {
+                if(e.target.value > 0) cambio(e);       
+                else {
+                    e.target.value = 1;       
+                    cambio(e);
+                }  
             });
         });
+
         //TODO: por que no me funciona esto? element.addEventListener('keyup', cambio(e));
         // seria un codigo mas limpio pero me dice que e no esta definida.
 
@@ -179,6 +157,14 @@ class UI {
     }
 
 
+    static activarPapelera() { 
+        document.querySelectorAll('#contenedor-articulos i').forEach(papelera => {
+            papelera.addEventListener('click', (e) => {
+                console.log(e.target.parentElement.parentElement.parentElement.id);
+                Carro.borrarProducto(e.target.parentElement.parentElement.parentElement.id);
+            })
+        });
+    }
     
     static muestraDedito(e){
         e.target.nextElementSibling.style.transform = 'scale(1.0)';
@@ -215,7 +201,7 @@ class UI {
 
             let precio = document.createElement('p');
             precio.id = 'precio';
-            precio.innerText = producto.precio;
+            precio.innerText = producto.precio.toFixed(2);
 
 
             let botonAgregar = document.createElement('div');
@@ -253,7 +239,6 @@ UI.cargarProductos(productos);
 document.querySelectorAll('.agregar-carro').forEach(iterador => {
 
     iterador.addEventListener('click', e => {
-        console.log(e.target.parentElement.parentElement.id);
         let codigoSeleccionado = e.target.parentElement.parentElement.id;
         UI.muestraDedito(e);
         productos.forEach(producto => {
@@ -268,3 +253,9 @@ document.querySelectorAll('.agregar-carro').forEach(iterador => {
 
 //pinchamos en el carrito para verlo
 document.querySelector('#icono-carro').addEventListener('click', UI.muestraProducto);
+
+
+//FIXME: estoy hay que borrarlo, es solo para ir haciendo un seguimiento del carro.
+document.getElementById('probando').addEventListener('click', () => {
+    console.log(carro);
+})

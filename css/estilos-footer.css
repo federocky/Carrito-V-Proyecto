@@ -1,0 +1,76 @@
+footer {
+    background-color: #3C3C3C;
+    color: #fff;
+}
+
+#contenedorFooter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+
+#contenedorFooter ul{ 
+    margin-bottom: 30px;
+    list-style: none;
+    text-align: center;
+}
+
+
+#contenedorFooter ul li {
+    line-height: 25px;
+    letter-spacing: 5px;
+    font-family: 'Poppins';
+    cursor: pointer;
+}
+
+#contenedorFooter ul li p {
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+#contenedorFooter ul li a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+}
+
+#contenedorFooter ul:nth-child(4) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#contenedorFooter ul:nth-child(4) li:first-child {
+    flex: 1 0 100%;
+}
+
+#contenedorFooter ul:nth-child(4) li i {
+    font-size: 30px;
+    margin: 10px 5px;
+}
+
+#contenedorFooter > a {
+    text-decoration: none;
+}
+
+#contenedorFooter > a h1 {
+    font-size: 30px;
+    color: #fff;
+    font-family: 'Architects Daughter';
+    font-size: 23px;
+    letter-spacing: 2px;
+}
+
+#contenedorFooter > a h1 span {
+    color: yellowgreen;
+}
+
+footer div:nth-child(2) {
+    background-color: #303030;
+    padding: 20px;
+    text-align: center;
+    line-height: 25px;
+    color: #585858;
+}
