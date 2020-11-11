@@ -6,6 +6,12 @@ let carro = [];
 
 class Carro {
 
+    //Se importa la primera vez que abrimos la aplicación
+    static importarStorage() {
+        let carroAux = JSON.parse(localStorage.getItem('carro'));
+        carroAux.forEach(elemento => carro.push(elemento));
+    }
+
     /**
      * Esto se ejecuta al pinchar en el boton de algun producto
      * @param {*} prod 
@@ -36,6 +42,8 @@ class Carro {
             carro.push(productoAux);
         }
 
+        Storage.guardar();
+
     }
 
     /**
@@ -44,8 +52,9 @@ class Carro {
     static borrarProducto (codigo) {
         carro.forEach(elemento => {
             if(elemento.codigo == codigo) carro.splice(carro.indexOf(elemento),1);
-            UI.muestraProducto();
         })
+        UI.muestraProducto();
+        Storage.guardar();
     }
 
     //Se actualiza la cantidad de articulos en el carro.
@@ -53,12 +62,20 @@ class Carro {
         carro.forEach(producto => {
             if(producto.codigo == e.target.parentElement.parentElement.id) producto.cantidad = e.target.value;
         });
+        Storage.guardar();
     }
 
 
 }
 
+class Storage {
 
+    static guardar() {
+        localStorage.clear();
+        localStorage.setItem('carro', JSON.stringify(carro));
+    }
+
+}
 
 
 class UI {
@@ -225,8 +242,67 @@ class UI {
         });
     }
 
-} 
+    //TODO: POR AQUI
+    static borraProductos() {
+        document.querySelector('#articulos').innerHTML = "";
+    }
 
+
+    static ordenarProductos () {
+
+        if(desplegable.value == 'precio-asc') {
+
+            productos.sort(function (a, b) {
+                if(a.precio > b.precio) return 1;
+                if(a.precio < b.precio) return -1;
+                return 0;
+            })
+        } else if (desplegable.value == 'precio-des') {
+    
+            productos.sort(function (a, b) {
+                if(a.precio < b.precio) return 1;
+                if(a.precio > b.precio) return -1;
+                return 0;
+            })
+        } else if (desplegable.value == 'valoracion'){
+    
+            productos.sort(function (a, b) {
+                if(a.estrellas < b.estrellas) return 1;
+                if(a.estrellas > b.estrellas) return -1;
+                return 0;
+            })
+        } else {
+            productos.sort(function (a, b) {
+                if(a.codigo > b.codigo) return 1;
+                if(a.codigo < b.codigo) return -1;
+                return 0;
+            })
+        }
+    
+        UI.borraProductos();
+        UI.cargarProductos(productos);
+        UI.ponerProductosEscucha();
+    }
+
+    static agregaProducto(e){
+
+        let codigoSeleccionado = e.target.parentElement.parentElement.id;
+        UI.muestraDedito(e);
+    
+        productos.forEach(producto => {
+            if(producto.codigo == codigoSeleccionado) {
+                Carro.agregaProducto(producto);
+                producto.stock--; //esto deberia estar en la funcion
+            }
+        })
+    }
+
+    static ponerProductosEscucha() {
+        document.querySelectorAll('.agregar-carro').forEach(iterador => {
+          iterador.addEventListener('click', UI.agregaProducto);
+        })
+    }
+} 
 
 
 
@@ -234,25 +310,23 @@ class UI {
 //Creo los productos dinamicante a partir de mi Almacen(array de objetos)
 UI.cargarProductos(productos);
 
+//cuando se carga la pagina importamos del localStorage si hubiera algo
+window.addEventListener('load', Carro.importarStorage);
 
-//pinchamos en agregar al carro
-document.querySelectorAll('.agregar-carro').forEach(iterador => {
 
-    iterador.addEventListener('click', e => {
-        let codigoSeleccionado = e.target.parentElement.parentElement.id;
-        UI.muestraDedito(e);
-        productos.forEach(producto => {
-            if(producto.codigo == codigoSeleccionado) {
-                Carro.agregaProducto(producto);
-                producto.stock--; //esto deberia estar en la funcion
-            }
-        })
-    })
-})
-
+UI.ponerProductosEscucha();
 
 //pinchamos en el carrito para verlo
 document.querySelector('#icono-carro').addEventListener('click', UI.muestraProducto);
+
+
+//ponemos a la escucha el desplegable para ord
+let desplegable = document.getElementById('ordenar');
+desplegable.addEventListener('change', UI.ordenarProductos);
+
+
+
+
 
 
 //FIXME: estoy hay que borrarlo, es solo para ir haciendo un seguimiento del carro.
